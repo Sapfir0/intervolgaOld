@@ -11,10 +11,23 @@ switch ($requestUri) {
         break;
     case '/addStudent':
         if ($requestMethod == "POST") {
-            $name = $_REQUEST['name'];
-            $group = $_REQUEST['group'];
-            
-            addStudent($name, $group);
+            $name = "ahahah";
+            $group = "lol";
+            try {
+                echo("$name $group");
+                $pdo = new PDO('mysql:dbname=studentdb;host=localhost', 'studentCrud', '123456');
+                $stmt = $pdo->prepare("INSERT INTO `studentdb`.`student` (`name`, `group`) values (:name, :group);");
+                $stmt->bindParam(':name', $name);
+                $stmt->bindParam(':group', $group);
+                $stmt->execute();
+
+
+            } catch (PDOException $e) {
+                die($e->getMessage());
+
+            }
+
+            //addStudent($name, $group);
         }
         break;
     case '/deleteStudent':
