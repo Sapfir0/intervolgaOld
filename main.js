@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const addStudentBtn = document.getElementsByClassName("addStudentBtn")[0];
-    const studentName = document.getElementsByName("studentName");
-    const studentGroup = document.getElementsByName("studentGroup");
+    const studentName = document.getElementsByName("studentName")[0];
+    const studentGroup = document.getElementsByName("studentGroup")[0];
     
     addStudentBtn.addEventListener("click", async () => {
         //TODO validate
@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
+            body: {
                 "name": studentName.value,
                 "group": studentGroup.value
-            })
+            }
         };
         let response = await fetch("/addStudent", options);
     })
