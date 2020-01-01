@@ -11,10 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 "name": studentName.value,
                 "group": studentGroup.value
-            }
+            })
         };
         let response = await fetch("/addStudent", options);
     })

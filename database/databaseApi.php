@@ -1,12 +1,15 @@
 <?php
 include_once "database/student.php";
 
-class studentDB  {
+class StudentDB  {
     private $pdo;
 
-    function __construct($dsn='mysql:dbname=studentdb;host=127.0.0.1') {
+    function __construct($username, $password, $dbname, $host="localhost", $dialect="mysql") {
         try {
-            $this->pdo = new PDO($dsn, 'studentCrud', '123456');
+            $dsn = "$dialect:dbname=$dbname;host=$host";
+            $this->pdo = new PDO($dsn, $username, $password);
+            $this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );//Error Handling
+
         } catch (PDOException $e) {
             print "Error!: " . $e->getMessage();
             die();
@@ -17,7 +20,7 @@ class studentDB  {
     }
 
     private function createTableIfNotExists() {
-        $this->pdo->query("CREATE TABLE IF NOT EXISTS `studentdb`.`student` (
+        $this->pdo->exec("CREATE TABLE IF NOT EXISTS `studentdb`.`student` (
             `id` INT AUTO_INCREMENT PRIMARY KEY, 
             `name` VARCHAR(255) NOT NULL, 
             `group` VARCHAR(20) NOT NULL);
