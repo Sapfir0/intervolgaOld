@@ -8,7 +8,7 @@ $requestUri = $_SERVER['REQUEST_URI'];
 $requestMethod = $_SERVER['REQUEST_METHOD'];
 
 $config = new Config();
-$db = new StudentDB($config->username, $config->password, $config->dbname);
+$db = new StudentDB($config);
 
 
 
@@ -16,14 +16,19 @@ switch ($requestUri) {
     case '/':
         require __DIR__ . '/views/index.html';
         break;
+    case '/getAllStudents':
+        $allStudents = $db->select();
+        foreach ($allStudents as $student) {
+            echo $student->name;
+        }
+        break;
     case '/addStudent':
         if ($requestMethod == "POST") {
             $inputJSON = file_get_contents('php://input');
             $input = json_decode($inputJSON, TRUE);
             $name = $input['name'];
             $group = $input['group'];
-            addStudent($name, $group);
-
+            addStudent($db, $name, $group);
         }
         break;
     case '/deleteStudent':
@@ -33,6 +38,6 @@ switch ($requestUri) {
         }
         break;
     default:
-        require __DIR__ . '/views/index.html';
+        require __DIR__ . '/views/404.html';
         break;
 } 

@@ -1,14 +1,15 @@
 <?php
 include_once "database/student.php";
 
+
 class StudentDB  {
     private $pdo;
 
-    function __construct($username, $password, $dbname, $host="localhost", $dialect="mysql") {
+    function __construct(Config $config) {
         try {
-            $dsn = "$dialect:dbname=$dbname;host=$host";
-            $this->pdo = new PDO($dsn, $username, $password);
-            $this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );//Error Handling
+            $dsn = "$config->dialect:dbname=$config->dbname;host=$config->host";
+            $this->pdo = new PDO($dsn, $config->username, $config->password);
+            $this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 
         } catch (PDOException $e) {
             print "Error!: " . $e->getMessage();
@@ -28,7 +29,9 @@ class StudentDB  {
     }
 
     function select() {
-        $this->pdo->query("SELECT * FROM `studentdb`.`student`;");
+        $sth = $this->pdo->prepare("SELECT `id`, `name`, `group` FROM `studentdb`.`student`;");
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_CLASS, "Student");
     }
     
     function insert(Student $studentInstance) {
