@@ -18,9 +18,7 @@ switch ($requestUri) {
         break;
     case '/getAllStudents':
         $allStudents = $db->select();
-        foreach ($allStudents as $student) {
-            echo $student->name;
-        }
+        echo json_encode($allStudents);
         break;
     case '/addStudent':
         if ($requestMethod == "POST") {
