@@ -12,8 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "studentName": studentName.value,
-                "studentGroup": studentGroup.value
+                "name": studentName.value,
+                "group": studentGroup.value
             })
         };
         let response = await fetch("/addStudent", options);
