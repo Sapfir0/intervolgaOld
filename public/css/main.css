@@ -5,26 +5,26 @@ body {
     margin-right: auto;
 }
 
-.addStudentBtn, .deleteStudentBtn {
+.addCountryBtn, .deleteCountryBtn {
     color: white;
     height: 37px;
     width: 100px;
     border-radius: 5px;
 }
 
-.addStudentBtn {
+.addCountryBtn {
     background-color: dodgerblue;
 }
 
-.addStudentBtn:hover {
+.addCountryBtn:hover {
     background-color: deepskyblue;
 }
 
-.deleteStudentBtn {
+.deleteCountryBtn {
     background-color: red;
 }
 
-.deleteStudentBtn:hover {
+.deleteCountryBtn:hover {
     background-color: darkred;
 }
 

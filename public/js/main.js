@@ -1,44 +1,43 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const addStudentBtn = document.getElementsByClassName("addStudentBtn")[0];
-    const studentName = document.getElementsByName("studentName")[0];
-    const studentGroup = document.getElementsByName("studentGroup")[0];
-    const studentTable = document.getElementById("studentTable");
+    const addCountryBtn = document.getElementsByClassName("addCountryBtn")[0];
+    const countryName = document.getElementsByName("countryName")[0];
+    const countryCapital = document.getElementsByName("countryCapital")[0];
+    const countryTable = document.getElementById("countryTable");
 
 
-    const json = await fetch("/getAllStudents")
+    const json = await fetch("/getAllCountries")
     const res = await json.json();
     console.log(res);
-    let studentData = ""; //ох как это будет медленно, надо на массив переделать
+    let countryData = ""; //ох как это будет медленно, надо на массив переделать
     for (let i=0; i< res.length; i++) {
-        studentData += tr(td(res[i].name) +
-            td(res[i].group) +
-            td("<button class='deleteStudentBtn'>Delete student</button>"))
+        countryData += tr(td(res[i].name) +
+            td(res[i].capital) +
+            td("<button class='deleteCountryBtn'>Delete country</button>"))
     }
 
-    studentTable.insertAdjacentHTML("beforeend", studentData);
+    countryTable.insertAdjacentHTML("beforeend", countryData);
 
 
-    const deleteStudentBtn = document.getElementsByClassName("deleteStudentBtn"); //array
-    for (let i=0; i<deleteStudentBtn.length; i++) {
-        deleteStudentBtn[i].addEventListener("click", async () => {
-            let studentId = res[i].id;
-            await deleteStudent(studentId);
+    const deleteCountryBtn = document.getElementsByClassName("deleteCountryBtn"); //array
+    for (let i=0; i<deleteCountryBtn.length; i++) {
+        deleteCountryBtn[i].addEventListener("click", async () => {
+            let countryId = res[i].id;
+            await deleteCountry(countryId);
             window.location.replace("/"); // не оч
         })
     }
 
-    addStudentBtn.addEventListener("click", async () => {
+    addCountryBtn.addEventListener("click", async () => {
         const errorSpan = document.getElementById("serverError")
-        if ( !studentName.value.match(/[A-Za-zА-Яа-я]{2,40}/)) {
-            showError(errorSpan, "Не правильное имя")
+        if ( !countryName.value.match(/[A-Za-zА-Яа-я]{2,40}/)) {
+            showError(errorSpan, "Не правильное название страны")
         }
-        else if(!studentGroup.value.match(/.+/)) {
-            showError(errorSpan, "Не правильная группа")
+        else if(!countryCapital.value.match(/.+/)) {
+            showError(errorSpan, "Не правильная столица")
         }
         else {
             hideError(errorSpan);
-
-            await addStudent(studentName.value, studentGroup.value)
+            await addCountry(countryName.value, countryCapital.value)
             window.location.replace("/"); // не оч
         }
 
@@ -83,10 +82,10 @@ async function post(url, params) {
     return response;
 }
 
-async function addStudent(name, group) {
-    return await post("/addStudent", {"name":name, "group": group});
+async function addCountry(name, group) {
+    return await post("/addCountry", {"name":name, "group": group});
 }
 
-async function deleteStudent(studentId) {
-    return await post("/deleteStudent", {"id": studentId});
+async function deleteCountry(countryId) {
+    return await post("/deleteCountry", {"id": countryId});
 }

@@ -6,15 +6,15 @@ include_once "./routes/pages.php";
 
 
 $config = new Config();
-$db = new StudentDB($config);
+$db = new CountryDB($config);
 $router = new Router($db);
 
 $requestUri = $_SERVER['REQUEST_URI'];
 
 $requestApiRoutes= [
-    '/getAllStudents' => "getAllStudents",
-    '/addStudent' => "addStudent",
-    '/deleteStudent' => "deleteStudent"
+    '/getAllCountries' => "getAllCountries",
+    '/addCountry' => "addCountry",
+    '/deleteCountry' => "deleteCountry"
 ];
 
 $requestPageRoutes = [

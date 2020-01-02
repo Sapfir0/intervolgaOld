@@ -1,10 +1,10 @@
 <?php
-include_once "database/student.php";
+include_once "database/country.php";
 
 
-class StudentDB  {
+class CountryDB  {
     private $pdo;
-    public $tableFullName = "`studentdb`.`student`";
+    public $tableFullName = "`countriesdb`.`countries`";
 
     function __construct(Config $config) {
         try {
@@ -25,19 +25,19 @@ class StudentDB  {
         $this->pdo->exec("CREATE TABLE IF NOT EXISTS $this->tableFullName (
             `id` INT AUTO_INCREMENT PRIMARY KEY, 
             `name` VARCHAR(50) NOT NULL, 
-            `group` VARCHAR(20) NOT NULL);
+            `capital` VARCHAR(20) NOT NULL);
             ");
     }
 
     function select() {
-        $sql = "SELECT `id`, `name`, `group` FROM $this->tableFullName;";
+        $sql = "SELECT `id`, `name`, `capital` FROM $this->tableFullName;";
         $sth = $this->pdo->prepare($sql);
         $sth->execute();
-        return $sth->fetchAll(PDO::FETCH_CLASS, "Student");
+        return $sth->fetchAll(PDO::FETCH_CLASS, "Country");
     }
     
-    function insert(Student $studentInstance) {
-        $sql = "INSERT INTO $this->tableFullName (`name`, `group`) values (:name, :group);";
+    function insert(Country $studentInstance) {
+        $sql = "INSERT INTO $this->tableFullName (`name`, `capital`) values (:name, :group);";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':name', $studentInstance->name);
         $stmt->bindParam(':group', $studentInstance->group);
@@ -45,9 +45,9 @@ class StudentDB  {
     }
 
     function delete(int $id) {
-        $sql = "DELETE FROM $this->tableFullName WHERE id=:studentId";
+        $sql = "DELETE FROM $this->tableFullName WHERE id=:countryId";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':studentId', $id);
+        $stmt->bindParam(':countryId', $id);
         $stmt->execute();
     }
 }

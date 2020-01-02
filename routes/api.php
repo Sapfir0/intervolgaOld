@@ -1,11 +1,11 @@
 <?php
 include_once "./database/database_api.php";
-include_once "./database/student.php";
+include_once "./database/country.php";
 
 class Router {
     private $db;
 
-    function __construct(StudentDB $db) {
+    function __construct(CountryDB $db) {
         $this->db = $db;
     }
 
@@ -14,7 +14,7 @@ class Router {
         return json_decode($inputJSON, TRUE);
     }
 
-    function addStudent() {
+    function addCountry() {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $body = $this->getBodyParams();
             $name = $body['name'];
@@ -23,7 +23,7 @@ class Router {
             $fixedGroup = htmlspecialchars($group);
             $fixedName = htmlspecialchars($name);
 
-            $student = new Student();
+            $student = new Country();
             $student->group = $fixedGroup;
             $student->name = $fixedName;
 
@@ -31,7 +31,7 @@ class Router {
         }
     }
 
-    function deleteStudent() {
+    function deleteCountry() {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $body = $this->getBodyParams();
             $id = $body['id'];
@@ -40,9 +40,9 @@ class Router {
         }
     }
 
-    function getAllStudents() {
-        $allStudents = $this->db->select();
-        echo json_encode($allStudents);
+    function getAllCountries() {
+        $allCountries = $this->db->select();
+        echo json_encode($allCountries);
     }
 }
 
