@@ -1,46 +1,33 @@
 <?php
-include_once "./routes/student.php";
+include_once "./routes/api.php";
 include_once "database/config.php";
 include_once "./database/database_api.php";
+include_once "./routes/pages.php";
 
-
-$requestUri = $_SERVER['REQUEST_URI'];
-$requestMethod = $_SERVER['REQUEST_METHOD'];
 
 $config = new Config();
 $db = new StudentDB($config);
+$router = new Router($db);
 
+$requestUri = $_SERVER['REQUEST_URI'];
 
-switch ($requestUri) {
-    case '/':
-        require __DIR__ . '/views/index.html';
-        break;
-    case '/getAllStudents':
-        $allStudents = $db->select();
-        echo json_encode($allStudents);
-        break;
-    case '/addStudent':
-        if ($requestMethod == "POST") {
-            $body = getBodyParams();
-            $name = $body['name'];
-            $group = $body['group'];
-            addStudent($db, $name, $group);
-        }
-        break;
-    case '/deleteStudent':
-        if ($requestMethod == "POST") {
-            $body = getBodyParams();
-            $id = $body['id'];
-            deleteStudent($db, $id);
-        }
-        break;
-    default:
-        require __DIR__ . '/views/404.html';
-        break;
+$requestApiRoutes= [
+    '/getAllStudents' => "getAllStudents",
+    '/addStudent' => "addStudent",
+    '/deleteStudent' => "deleteStudent"
+];
+
+$requestPageRoutes = [
+    '/' => "/index.html",
+];
+
+if (array_key_exists($requestUri, $requestApiRoutes)) {
+    call_user_func(array(&$router, $requestApiRoutes[$requestUri]));
+}
+else if (array_key_exists($requestUri, $requestPageRoutes)) {
+    getPage($requestPageRoutes[$requestUri]);
+}
+else {
+    getPage('/404.html');
 }
 
-
-function getBodyParams() {
-    $inputJSON = file_get_contents('php://input');
-    return json_decode($inputJSON, TRUE);
-}
