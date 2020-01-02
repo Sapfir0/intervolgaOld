@@ -5,11 +5,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const studentTable = document.getElementById("studentTable");
 
 
-
     const json = await fetch("/getAllStudents")
     const res = await json.json();
-    console.log(res)
-    let studentData = "" //ох как это будет медленно, надо на массив переделать
+    console.log(res);
+    let studentData = ""; //ох как это будет медленно, надо на массив переделать
     for (let i=0; i< res.length; i++) {
         studentData += tr(td(res[i].name) +
             td(res[i].group) +
@@ -29,12 +28,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     addStudentBtn.addEventListener("click", async () => {
-        //TODO validate
         const errorSpan = document.getElementById("serverError")
-        if ( !studentName.value.match(".+")) {
+        if ( !studentName.value.match(/[A-Za-zА-Яа-я]{2,40}/)) {
             showError(errorSpan, "Не правильное имя")
         }
-        else if(!studentGroup.value.match(".+")) {
+        else if(!studentGroup.value.match(/.+/)) {
             showError(errorSpan, "Не правильная группа")
         }
         else {
@@ -86,10 +84,9 @@ async function post(url, params) {
 }
 
 async function addStudent(name, group) {
-    let response = await post("/addStudent", {"name":name, "group": group});
-
+    return await post("/addStudent", {"name":name, "group": group});
 }
 
 async function deleteStudent(studentId) {
-    let response = await post("/deleteStudent", {"id": studentId});
+    return await post("/deleteStudent", {"id": studentId});
 }

@@ -1,5 +1,5 @@
 <?php
-include_once "./database/databaseApi.php";
+include_once "./database/database_api.php";
 include_once "./database/student.php";
 
 function addStudent(StudentDB $db, string $name, string $group) {
