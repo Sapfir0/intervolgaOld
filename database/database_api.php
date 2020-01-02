@@ -36,11 +36,11 @@ class CountryDB  {
         return $sth->fetchAll(PDO::FETCH_CLASS, "Country");
     }
     
-    function insert(Country $studentInstance) {
+    function insert(Country $countryInstance) {
         $sql = "INSERT INTO $this->tableFullName (`name`, `capital`) values (:name, :group);";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':name', $studentInstance->name);
-        $stmt->bindParam(':group', $studentInstance->group);
+        $stmt->bindParam(':name', $countryInstance->name);
+        $stmt->bindParam(':capital', $countryInstance->capital);
         $stmt->execute();
     }
 

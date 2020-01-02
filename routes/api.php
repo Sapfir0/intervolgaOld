@@ -23,11 +23,11 @@ class Router {
             $fixedGroup = htmlspecialchars($group);
             $fixedName = htmlspecialchars($name);
 
-            $student = new Country();
-            $student->group = $fixedGroup;
-            $student->name = $fixedName;
+            $country = new Country();
+            $country->group = $fixedGroup;
+            $country->name = $fixedName;
 
-            $this->db->insert($student);
+            $this->db->insert($country);
         }
     }
 
