@@ -18,11 +18,14 @@ $requestApiRoutes= [
 ];
 
 $requestPageRoutes = [
-    '/' => getPage('/index.html'),
+    '/' => "/index.html",
 ];
 
-if (array_key_exists($requestUri, $requestApiRoutes) ) {
+if (array_key_exists($requestUri, $requestApiRoutes)) {
     call_user_func(array(&$router, $requestApiRoutes[$requestUri]));
+}
+else if (array_key_exists($requestUri, $requestPageRoutes)) {
+    getPage($requestPageRoutes[$requestUri]);
 }
 else {
     getPage('/404.html');
