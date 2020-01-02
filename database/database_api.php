@@ -37,7 +37,7 @@ class CountryDB  {
     }
     
     function insert(Country $countryInstance) {
-        $sql = "INSERT INTO $this->tableFullName (`name`, `capital`) values (:name, :group);";
+        $sql = "INSERT INTO $this->tableFullName (`name`, `capital`) values (:name, :capital);";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':name', $countryInstance->name);
         $stmt->bindParam(':capital', $countryInstance->capital);

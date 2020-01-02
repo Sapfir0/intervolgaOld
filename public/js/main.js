@@ -82,8 +82,8 @@ async function post(url, params) {
     return response;
 }
 
-async function addCountry(name, group) {
-    return await post("/addCountry", {"name":name, "group": group});
+async function addCountry(name, capital) {
+    return await post("/addCountry", {"name":name, "capital": capital});
 }
 
 async function deleteCountry(countryId) {
