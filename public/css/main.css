@@ -1,0 +1,39 @@
+
+body {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.addStudentBtn, .deleteStudentBtn {
+    color: white;
+    height: 37px;
+    width: 100px;
+    border-radius: 5px;
+}
+
+.addStudentBtn {
+    background-color: dodgerblue;
+}
+
+.addStudentBtn:hover {
+    background-color: deepskyblue;
+}
+
+.deleteStudentBtn {
+    background-color: red;
+}
+
+.deleteStudentBtn:hover {
+    background-color: darkred;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 25px;
+}
+
+table, th, td {
+    border: 1px solid grey;
+}

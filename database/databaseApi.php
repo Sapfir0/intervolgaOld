@@ -4,6 +4,7 @@ include_once "database/student.php";
 
 class StudentDB  {
     private $pdo;
+    public $tableFullName = "`studentdb`.`student`";
 
     function __construct(Config $config) {
         try {
@@ -21,23 +22,32 @@ class StudentDB  {
     }
 
     private function createTableIfNotExists() {
-        $this->pdo->exec("CREATE TABLE IF NOT EXISTS `studentdb`.`student` (
+        $this->pdo->exec("CREATE TABLE IF NOT EXISTS $this->tableFullName (
             `id` INT AUTO_INCREMENT PRIMARY KEY, 
-            `name` VARCHAR(255) NOT NULL, 
+            `name` VARCHAR(50) NOT NULL, 
             `group` VARCHAR(20) NOT NULL);
             ");
     }
 
     function select() {
-        $sth = $this->pdo->prepare("SELECT `id`, `name`, `group` FROM `studentdb`.`student`;");
+        $sql = "SELECT `id`, `name`, `group` FROM $this->tableFullName;";
+        $sth = $this->pdo->prepare($sql);
         $sth->execute();
         return $sth->fetchAll(PDO::FETCH_CLASS, "Student");
     }
     
     function insert(Student $studentInstance) {
-        $stmt = $this->pdo->prepare("INSERT INTO `studentdb`.`student` (`name`, `group`) values (:name, :group);");
+        $sql = "INSERT INTO $this->tableFullName (`name`, `group`) values (:name, :group);";
+        $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':name', $studentInstance->name);
         $stmt->bindParam(':group', $studentInstance->group);
+        $stmt->execute();
+    }
+
+    function delete(int $id) {
+        $sql = "DELETE FROM $this->tableFullName WHERE id=:studentId";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(':studentId', $id);
         $stmt->execute();
     }
 }

@@ -1,0 +1,13 @@
+
+
+.error {
+    background-color: indianred;
+    color: white;
+
+    border-radius: 3px;
+}
+
+.clear {
+    color: black;
+}
+

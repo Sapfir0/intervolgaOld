@@ -31,8 +31,10 @@ switch ($requestUri) {
         break;
     case '/deleteStudent':
         if ($requestMethod == "POST") {
-            $id = $_REQUEST['id'];
-            deleteStudent($id);
+            $inputJSON = file_get_contents('php://input');
+            $input = json_decode($inputJSON, TRUE);
+            $id = $input['id'];
+            deleteStudent($db, $id);
         }
         break;
     default:

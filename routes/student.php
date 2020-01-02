@@ -3,15 +3,18 @@ include_once "./database/databaseApi.php";
 include_once "./database/student.php";
 
 function addStudent(StudentDB $db, string $name, string $group) {
+    $fixedGroup = htmlspecialchars($group);
+    $fixedName = htmlspecialchars($name);
+
     $student = new Student();
-    $student->group = $group;
-    $student->name = $name;
+    $student->group = $fixedGroup;
+    $student->name = $fixedName;
 
     $db->insert($student);
 
 }
 
 
-function deleteStudent($id) {
-
+function deleteStudent(StudentDB $db, $id) {
+    $db->delete($id);
 }
