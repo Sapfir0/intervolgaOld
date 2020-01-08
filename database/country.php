@@ -2,7 +2,7 @@
 
 class Country {
     public $name;
-    public $capital;
+    public $capitalName;
 
 
 }
