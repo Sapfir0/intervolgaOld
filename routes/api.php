@@ -29,7 +29,7 @@ class Router {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $body = $this->getBodyParams();
             $name = $body['name'];
-            $capitalName = $body['capital'];
+            $capitalName = $body['capitalName'];
 
             $fixedCapitalName = htmlspecialchars($capitalName);
             $fixedName = htmlspecialchars($name);
