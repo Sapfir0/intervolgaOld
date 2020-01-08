@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const addCountryBtn = document.getElementsByClassName("addCountryBtn")[0];
     const countryName = document.getElementsByName("countryName")[0];
-    const countryCapital = document.getElementsByName("countryCapital")[0];
+    const countryCapitalName = document.getElementsByName("countryCapitalName")[0];
     const countryTable = document.getElementById("countryTable");
 
 
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     let countryData = ""; //ох как это будет медленно, надо на массив переделать
     for (let i=0; i< res.length; i++) {
         countryData += tr(td(res[i].name) +
-            td(res[i].capital) +
+            td(res[i].capitalName) +
             td("<button class='deleteCountryBtn'>Delete country</button>"))
     }
 
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         deleteCountryBtn[i].addEventListener("click", async () => {
             let countryId = res[i].id;
             await deleteCountry(countryId);
-            window.location.replace("/"); // не оч
+            //window.location.replace("/"); // не оч
         })
     }
 
@@ -32,13 +32,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         if ( !countryName.value.match(/[A-Za-zА-Яа-я]{2,40}/)) {
             showError(errorSpan, "Не правильное название страны")
         }
-        else if(!countryCapital.value.match(/.+/)) {
-            showError(errorSpan, "Не правильная столица")
+        else if(!countryCapitalName.value.match(/.+/)) {
+            showError(errorSpan, "Не правильная название столицы")
         }
         else {
             hideError(errorSpan);
-            await addCountry(countryName.value, countryCapital.value)
-            window.location.replace("/"); // не оч
+            await addCountry(countryName.value, countryCapitalName.value)
+            //window.location.replace("/"); // не оч
         }
 
     })
@@ -83,7 +83,7 @@ async function post(url, params) {
 }
 
 async function addCountry(name, capital) {
-    return await post("/addCountry", {"name":name, "capital": capital});
+    return await post("/addCountry", {"name":name, "capitalName": capital});
 }
 
 async function deleteCountry(countryId) {

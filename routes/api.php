@@ -4,7 +4,7 @@ include_once "./database/country.php";
 
 /**
  * Class Router
- * Обслуживает роутеры, понятно же.
+ * Обслуживает роуты, понятно же.
  * Куча методов с неявной передачей аргументов в них. Неприемлимо.
  */
 class Router {
@@ -21,21 +21,21 @@ class Router {
 
     /**
      * Добавляет запись в БД.
-     * @param $name of country
-     * @param $capital of country
+     * @param string $name of country 
+     * @param string $name of country's capital
      * @return None
      */
     function addCountry() {
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             $body = $this->getBodyParams();
             $name = $body['name'];
-            $capital = $body['capital'];
+            $capitalName = $body['capitalName'];
 
-            $fixedCapital = htmlspecialchars($capital);
+            $fixedCapitalName = htmlspecialchars($capitalName);
             $fixedName = htmlspecialchars($name);
 
             $country = new Country();
-            $country->capital = $fixedCapital;
+            $country->capitalName = $fixedCapitalName;
             $country->name = $fixedName;
 
             $this->db->insert($country);
@@ -44,7 +44,7 @@ class Router {
 
     /**
      * Удаляет страну по id из БД.
-     * @param $id of country
+     * @param int $id of country
      * @return None
      */
     function deleteCountry() {
